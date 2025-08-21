@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0b1020;
+      --bg-accent: #0f1630;
+      --card: rgba(255,255,255,.08);
+      --card-border: rgba(255,255,255,.15);
+      --text: #e8eaf4;
+      --muted: #b2b7c7;
+      --brand: #7c5cff;
+      --brand-2: #3ad1ff;
+      --danger: #ff6b6b;
+      --shadow: 0 20px 40px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg: #eef1f8;
+        --bg-accent: #e3e7f3;
+        --card: rgba(255,255,255,.9);
+        --card-border: rgba(0,0,0,.06);
+        --text: #12131a;
+        --muted: #49506b;
+        --shadow: 0 20px 40px rgba(41, 54, 101, .15);
+      }
+    }
+
+    *{ box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 20% 10%, #1a1f3a, transparent 60%),
+                  radial-gradient(1000px 700px at 90% 20%, #162a4d, transparent 55%),
+                  radial-gradient(900px 600px at 50% 100%, #1a2d5a, transparent 45%),
+                  var(--bg);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .container{
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+    }
+
+    .brand-badge{
+      position: absolute;
+      top: -52px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: grid;
+      place-items: center;
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background:
+        radial-gradient(100px 100px at 30% 30%, rgba(255,255,255,.25), transparent 60%),
+        linear-gradient(135deg, var(--brand), var(--brand-2));
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(255,255,255,.35);
+    }
+    .brand-badge span{
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)) , var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    header{
+      padding: 86px 28px 8px;
+      text-align: center;
+    }
+    h1{
+      margin: 0 0 6px;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    p.sub{
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    form{
+      padding: 12px 24px 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .field{
+      position: relative;
+    }
+    label{
+      display: inline-block;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 0 6px 2px;
+    }
+    .input{
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 0 6px;
+      transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .input:focus-within{
+      border-color: rgba(124, 92, 255, .6);
+      box-shadow: 0 0 0 4px rgba(124, 92, 255, .18);
+      background: rgba(255,255,255,.08);
+    }
+    .input span.icon{
+      display: grid;
+      place-items: center;
+      opacity: .9;
+      font-size: 18px;
+      user-select: none;
+    }
+    .input input{
+      appearance: none;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      padding: 14px 8px;
+      font-size: 15px;
+      color: var(--text);
+      width: 100%;
+    }
+    .input button.eye{
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      height: 40px;
+      width: 40px;
+      border-radius: 8px;
+      opacity: .8;
+      transition: opacity .2s ease, transform .1s ease;
+    }
+    .input button.eye:hover{ opacity: 1; }
+    .input button.eye:active{ transform: scale(.98); }
+
+    .row{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .row .remember{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      user-select: none;
+    }
+    .row a{
+      font-size: 14px;
+      color: var(--brand-2);
+      text-decoration: none;
+    }
+    .row a:hover{ text-decoration: underline; }
+
+    .btn{
+      appearance: none;
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      letter-spacing: .2px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: white;
+      box-shadow: 0 10px 24px rgba(92, 112, 255, .35);
+      transition: transform .06s ease, filter .2s ease, box-shadow .2s ease;
+    }
+    .btn:hover{ filter: brightness(1.05); box-shadow: 0 12px 28px rgba(92,112,255,.4); }
+    .btn:active{ transform: translateY(1px) scale(.99); }
+    .btn:disabled{ opacity: .7; cursor: not-allowed; }
+
+    .divider{
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 0 24px 10px;
+    }
+    .divider::before, .divider::after{
+      content: "";
+      height: 1px;
+      background: var(--card-border);
+    }
+
+    .oauth{
+      padding: 0 24px 24px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr;
+    }
+    .oauth button{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background .2s ease, box-shadow .2s ease;
+    }
+    .oauth button:hover{ background: rgba(255,255,255,.1); box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+
+    footer{
+      text-align: center;
+      padding: 10px 24px 24px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer a{ color: var(--brand-2); text-decoration: none; }
+    footer a:hover{ text-decoration: underline; }
+
+    /* Small screens */
+    @media (max-width: 420px){
+      h1{ font-size: 24px; }
+      .brand-badge{ width: 76px; height: 76px; top: -44px; }
+      header{ padding-top: 78px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container" role="main">
+    <div class="brand-badge" aria-hidden="true">
+      <span>🔐</span>
+    </div>
+
+    <section class="card" aria-label="Sign in form">
+      <header>
+        <h1>Welcome back</h1>
+        <p class="sub">Sign in to continue</p>
+      </header>
+
+      <form id="loginForm" action="#" method="post" novalidate>
+        <div class="field">
+          <label for="email">Email</label>
+          <div class="input">
+            <span class="icon">📧</span>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required aria-required="true" autocomplete="email" />
+            <span style="width:40px;"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="input">
+            <span class="icon">🔑</span>
+            <input id="password" name="password" type="password" placeholder="Your password" required aria-required="true" minlength="6" autocomplete="current-password" />
+            <button class="eye" type="button" aria-label="Show password" title="Show/Hide password" id="togglePwd">👁️</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <label class="remember">
+            <input type="checkbox" id="remember" name="remember" />
+            Remember me
+          </label>
+          <a href="#" aria-label="Forgot password">Forgot password?</a>
+        </div>
+
+        <button class="btn" type="submit">Sign in</button>
+      </form>
+
+      <div class="divider">or continue with</div>
+
+      <div class="oauth">
+        <button type="button" aria-label="Continue with Google">Continue with Google</button>
+        <button type="button" aria-label="Continue with GitHub">Continue with GitHub</button>
+      </div>
+
+      <footer>
+        Don’t have an account? <a href="#">Create one</a>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    // Toggle password visibility
+    const pwd = document.getElementById('password');
+    const toggle = document.getElementById('togglePwd');
+    toggle.addEventListener('click', () => {
+      const isHidden = pwd.getAttribute('type') === 'password';
+      pwd.setAttribute('type', isHidden ? 'text' : 'password');
+      toggle.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+    });
+
+    // Basic client-side validation UX
+    const form = document.getElementById('loginForm');
+    form.addEventListener('submit', (e) => {
+      if(!form.checkValidity()){
+        e.preventDefault();
+        [...form.querySelectorAll('input')].forEach(input => {
+          if(!input.checkValidity()){
+            input.parentElement.style.borderColor = 'rgba(255, 107, 107, .9)';
+            input.parentElement.style.boxShadow = '0 0 0 4px rgba(255, 107, 107, .2)';
+          } else {
+            input.parentElement.style.borderColor = 'var(--card-border)';
+            input.parentElement.style.boxShadow = 'none';
+          }
+        });
+      } else {
+        // Simulated submit action
+        e.preventDefault();
+        alert('Signed in! (demo)');
+      }
+    });
+  </script>
+</body>
+</html>
